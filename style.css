@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
+.header1 {
+  position: relative;
+  top: 7%;
+  font-size: 36px;
+  letter-spacing: 24px;
+  font-family: "Archivo Black", sans-serif;
+}
+
+.header2 {
+  position: relative;
+  top: 9%;
+  font-size: 26px;
+  letter-spacing: 2px;
+  font-family: "Mitr", sans-serif;
+}
+
+.tooltip-container1 {
+  position: absolute;
+  left: 93%;
+  top: 93%;
+  transition: all 0.2s;
+  font-size: 17px;
+  padding: 1rem 0;
+  width: fit-content;
+  box-sizing: border-box;
+  --bg: linear-gradient(135deg, #651f9e, #170874);
+  --color: #fff;
+  --tooltip-bg: #303030;
+  --tooltip-color: #fff;
+  --margin: 0.5rem;
+}
+
+.tooltip-container2 {
+  position: absolute;
+  left: 1%;
+  top: 93%;
+  transition: all 0.2s;
+  font-size: 17px;
+  padding: 1rem 0;
+  width: fit-content;
+  box-sizing: border-box;
+  --bg: linear-gradient(135deg, #651f9e, #170874);
+  --color: #fff;
+  --tooltip-bg: #303030;
+  --tooltip-color: #fff;
+  --margin: 0.5rem;
+}
+
+.text {
+  z-index: 9;
+  background: var(--bg);
+  color: var(--color);
+  padding: 0.7em 1.8em;
+  border-radius: 0.75rem;
+  height: fit-content;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 16px 4px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip {
+  position: absolute;
+  top: calc(-1 * var(--margin));
+  left: 50%;
+  transform: translateX(-50%) translateY(0%) scale(0);
+  padding: 0.3em 0.6em;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-color);
+  border-radius: 2rem;
+  z-index: 99999;
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  height: 0.6em;
+  width: 0.6em;
+  bottom: -0.2em;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  background: var(--tooltip-bg);
+  border-bottom-right-radius: 0.175rem;
+}
+
+.tooltip-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(-100%) scale(1);
+}
+
+:root {  /* various fiddle bit - have a play */
+  --content-card-scale: 2;
+  --content-width: calc((100vh / var(--content-card-scale)) * 2 / 3);
+  --content-height: calc(100vh / var(--content-card-scale));
+  --font-size: calc(5px + 100vh / 50);
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  color: whitesmoke;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+@-webkit-keyframes bounce {
+    0% { margin-top:  0px; }
+   50% { margin-top: -8px; }
+  100% { margin-top:  0px; }
+}
+
+@keyframes bounce {
+    0% { margin-top:  0px; }
+   50% { margin-top: -8px; }
+  100% { margin-top:  0px; }
+}
+
+.coverflow {
+  height: 100%;
+  width: 100%;
+  perspective: 2000px;
+}
+
+.coverflow .content {
+  position: absolute;
+  top: calc(50% - var(--content-height) / 2);
+  left: calc(50% - var(--content-width) / 2);
+  width: var(--content-width);
+  height: var(--content-height);
+  transform-style: preserve-3d;
+  transition: all 300ms ease-in-out;
+  outline: none;
+}
+
+.coverflow .content:not(.current):hover .front {
+  animation: bounce 250ms normal forwards ease-in-out;
+  filter: grayscale(0%) brightness(100%);
+}
+
+.coverflow .content .front,
+.coverflow .content .back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  font-family: "Mitr", sans-serif;
+  font-size: 17px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.coverflow .content .back {
+  top: calc((var(--content-height) - var(--content-width)) / 2);
+  left: calc((var(--content-width) - var(--content-height)) / 2);
+  height: var(--content-width);
+  width: var(--content-height);
+  background: url(Img/Back\ pic.png) rgba(0, 0, 0, 0.79);
+  background-blend-mode: overlay;
+  border: 3px solid whitesmoke;
+  transform: rotateY(180deg) rotateZ(90deg);
+}
+
+.coverflow .content .back h2 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: calc(1.2 * var(--font-size));
+  width: 100%;
+  margin: 0;
+}
+
+.coverflow .content .front img {
+  vertical-align: middle;
+  border-radius: 10px;
+  border: 3px groove whitesmoke;
+  width: var(--content-width);
+  height: var(--content-height);
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
+  filter: grayscale(60%) brightness(80%);
+}
+
+.coverflow .content.current:not(.selected) .front img {
+  filter: grayscale(0%) brightness(100%);
+}
+
+.coverflow .content .front .info {
+  display: none;
+  font-size: var(--font-size);
+  width: calc(100% + 6px);
+  white-space: nowrap;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.coverflow .content.current:not(.selected) .front .info {
+  display: block;
+}
+
+button {
+  font-size: 17px;
+  border: 2px solid rgb(61, 106, 255);
+  border-radius: 50px 20px 50px 20px;
+  padding: 8px;
+  letter-spacing: 3px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+button:hover {
+  background: rgb(61, 106, 255);
+  box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+button:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+button::before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+button:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+.screen {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+video {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100vh;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+}
